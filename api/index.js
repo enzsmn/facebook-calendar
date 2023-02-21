@@ -47,17 +47,18 @@ module.exports = async (request, response) => {
                 calendarAll.createEvent(mappedEvent);
             }
 
+            response.setHeader('Cache-Control', 's-maxage=3600');
+
             if (request.query.status === 'going') {
-                calendarGoing.serve(response);
+                response.send(calendarGoing.toString());
                 return;
             }
 
             if (request.query.status === 'maybe') {
-                calendarMaybe.serve(response);
+                response.send(calendarMaybe.toString());
                 return;
             }
 
-            calendarAll.serve(response);
-        }
-    );
+            response.send(calendarGoing.toString());
+        });
 };
