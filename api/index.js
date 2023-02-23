@@ -47,7 +47,7 @@ module.exports = async (request, response) => {
                 calendarAll.createEvent(mappedEvent);
             }
 
-            response.setHeader('Cache-Control', 's-maxage=3600');
+            response.setHeader('Cache-Control', 's-maxage=21600');
 
             if (request.query.status === 'going') {
                 response.send(calendarGoing.toString());
