@@ -21,12 +21,12 @@ module.exports = async (request, response) => {
                 return;
             }
 
-            for (const k in data) {
-                if (data[k].type !== 'VEVENT' || !data.hasOwnProperty(k)) {
+            for (const key in data) {
+                if (data[key].type !== 'VEVENT' || !data.hasOwnProperty(key)) {
                     continue;
                 }
 
-                const event = data[k];
+                const event = data[key];
                 const mappedEvent = {
                     start: event.start,
                     end: event.end,
