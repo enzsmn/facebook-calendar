@@ -15,14 +15,9 @@ Put this link and a random password in the `.env`.
 Test locally with [Vercel CLI](https://vercel.com/docs/cli) by running `vercel dev` and adding the password to the querystring:
 
 ```
-http://localhost:3000?password=<PASSWORD>
-```
-
-Add an optional status parameter to request only events with a "maybe" or "going" response:
-
-```
-http://localhost:3000?password=<PASSWORD>&status=going
-http://localhost:3000?password=<PASSWORD>&status=maybe
+http://localhost:3000/all?password=<PASSWORD>
+http://localhost:3000/going?password=<PASSWORD>
+http://localhost:3000/maybe?password=<PASSWORD>
 ```
 
 

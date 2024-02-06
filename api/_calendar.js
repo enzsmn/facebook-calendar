@@ -1,15 +1,14 @@
-const icalGenerator = require('ical-generator');
-const icalReader = require('node-ical');
+const icalGenerator = require("ical-generator");
+const icalReader = require("node-ical");
 
-module.exports = async (request, response) => {
+module.exports = async (category, request, response) => {
     if (!request.query.password || request.query.password !== process.env.PASSWORD) {
+        response.setHeader('Cache-Control', 's-maxage=86400');
         response.send(400, 'Unauthorized');
         return;
     }
 
-    const calendarAll = icalGenerator({name: 'Facebook events (all)'});
-    const calendarGoing = icalGenerator({name: 'Facebook events (going)'});
-    const calendarMaybe = icalGenerator({name: 'Facebook events (maybe)'});
+    const calendar = icalGenerator({name: `Facebook events (${category})`});
 
     icalReader.fromURL(
         process.env.FACEBOOK_CALENDAR_URL,
@@ -36,29 +35,16 @@ module.exports = async (request, response) => {
                     url: event.url,
                 };
 
-                if (event.partstat === 'ACCEPTED') {
-                    calendarGoing.createEvent(mappedEvent);
+                if (
+                    category === 'all' ||
+                    category === 'going' && event.partstat === 'ACCEPTED' ||
+                    category === 'maybe' && event.partstat === 'TENTATIVE'
+                ) {
+                    calendar.createEvent(mappedEvent);
                 }
-
-                if (event.partstat === 'TENTATIVE') {
-                    calendarMaybe.createEvent(mappedEvent);
-                }
-
-                calendarAll.createEvent(mappedEvent);
             }
 
             response.setHeader('Cache-Control', 's-maxage=86400');
-
-            if (request.query.status === 'going') {
-                response.send(calendarGoing.toString());
-                return;
-            }
-
-            if (request.query.status === 'maybe') {
-                response.send(calendarMaybe.toString());
-                return;
-            }
-
-            response.send(calendarGoing.toString());
+            response.send(calendar.toString());
         });
-};
+}

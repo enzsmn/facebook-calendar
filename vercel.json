@@ -4,8 +4,16 @@
   },
   "routes": [
     {
-      "src": "/",
-      "dest": "/api/index.js"
+      "src": "/all",
+      "dest": "/api/all.js"
+    },
+    {
+      "src": "/going",
+      "dest": "/api/going.js"
+    },
+    {
+      "src": "/maybe",
+      "dest": "/api/maybe.js"
     }
   ]
 }
