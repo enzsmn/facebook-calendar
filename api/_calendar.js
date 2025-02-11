@@ -3,7 +3,6 @@ const icalReader = require("node-ical");
 
 module.exports = async (category, request, response) => {
     if (!request.query.password || request.query.password !== process.env.PASSWORD) {
-        response.setHeader('Cache-Control', 's-maxage=86400');
         response.send(400, 'Unauthorized');
         return;
     }
@@ -44,7 +43,7 @@ module.exports = async (category, request, response) => {
                 }
             }
 
-            response.setHeader('Cache-Control', 's-maxage=86400');
+            response.setHeader('Cache-Control', 's-maxage=14400');
             response.send(calendar.toString());
         });
 }
