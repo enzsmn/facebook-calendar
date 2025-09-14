@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "ical-generator": "^3.5.1",
-    "node-ical": "^0.15.1"
+    "node-ical": "^0.20.1"
   }
 }
