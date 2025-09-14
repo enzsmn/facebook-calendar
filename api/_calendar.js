@@ -1,7 +1,7 @@
-const ical = require("ical-generator");
-const icalReader = require("node-ical");
+import icalReader from "node-ical";
+import ical from "ical-generator";
 
-module.exports = async (category, request, response) => {
+export default async (category, request, response) => {
     if (!request.query.uid) {
         response.status(400).send('Missing uid');
         return;

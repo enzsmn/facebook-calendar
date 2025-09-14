@@ -1,3 +1,3 @@
-const calendar = require('./_calendar');
+import calendar from './_calendar.js';
 
-module.exports = async (request, response) => await calendar('maybe', request, response);
+export default async (request, response) => await calendar('maybe', request, response);
