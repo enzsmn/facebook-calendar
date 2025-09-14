@@ -1,21 +1,26 @@
-const icalGenerator = require("ical-generator");
+const ical = require("ical-generator");
 const icalReader = require("node-ical");
 
 module.exports = async (category, request, response) => {
-    if (!request.query.password || request.query.password !== process.env.PASSWORD) {
-        response.send(400, 'Unauthorized');
+    if (!request.query.uid) {
+        response.status(400).send('Missing uid');
         return;
     }
 
-    const calendar = icalGenerator({name: `Facebook events (${category})`});
+    if (!request.query.key) {
+        response.status(400).send('Missing key');
+        return;
+    }
+
+    const calendar = ical({name: `Facebook events (${category})`});
 
     icalReader.fromURL(
-        process.env.FACEBOOK_CALENDAR_URL,
+        `https://www.facebook.com/events/ical/upcoming/?uid=${request.query.uid}&key=${request.query.key}`,
         null,
         function (error, data) {
             if (error) {
                 console.log(error);
-                response.send(500, 'Error');
+                response.status(500).send('Error');
                 return;
             }
 
@@ -36,8 +41,8 @@ module.exports = async (category, request, response) => {
 
                 if (
                     category === 'all' ||
-                    category === 'going' && event.partstat === 'ACCEPTED' ||
-                    category === 'maybe' && event.partstat === 'TENTATIVE'
+                    category === 'maybe' && event.partstat === 'TENTATIVE' ||
+                    category === 'going' && event.partstat === 'ACCEPTED'
                 ) {
                     calendar.createEvent(mappedEvent);
                 }

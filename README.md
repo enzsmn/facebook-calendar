@@ -1,28 +1,23 @@
 # Facebook calendar
 
+This project is a middleware to filter your Facebook event feed on event statuses.
+
 Inspired by [simonbengtsson/eventcal](https://github.com/simonbengtsson/eventcal).
 
-## Setup
-
-Copy `.env.example` to `.env`. 
+## Usage
 
 Go to Facebook → Events → See All, right-click the "Add to Calendar" button and copy the target (e.g. https://www.facebook.com/events/ical/upcoming/?uid=123&key=abc).
 
-Put this link and a random password in the `.env`.
+Take the query parameters `uid` and `key` from the URL's query string.
 
-## Develop
-
-Test locally with [Vercel CLI](https://vercel.com/docs/cli) by running `vercel dev` and adding the password to the querystring:
+Replace the placeholders in the URLs below with your values and subscribe to the desired feed(s) in your calendar app.
 
 ```
-http://localhost:3000/all?password=<PASSWORD>
-http://localhost:3000/going?password=<PASSWORD>
-http://localhost:3000/maybe?password=<PASSWORD>
+https://facebook-calendar.vercel.app/all?uid=<UID>&key=<KEY>
+https://facebook-calendar.vercel.app/maybe?uid=<UID>&key=<KEY>
+https://facebook-calendar.vercel.app/going?uid=<UID>&key=<KEY>
 ```
 
+## Development
 
-## Deploy
-
-Fill in your Vercel project's environment variables with the entries from `.env`.
-
-Add your Vercel project's URL to your calendar application with the password and the optional status parameter:
+Test locally with [Vercel CLI](https://vercel.com/docs/cli) by running `vercel dev`.
