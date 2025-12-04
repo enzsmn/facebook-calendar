@@ -2,18 +2,25 @@
   "github": {
     "silent": true
   },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/all",
-      "dest": "/api/all.js"
+      "source": "/all",
+      "destination": "/api/all.js"
     },
     {
-      "src": "/maybe",
-      "dest": "/api/maybe.js"
+      "source": "/maybe",
+      "destination": "/api/maybe.js"
     },
     {
-      "src": "/going",
-      "dest": "/api/going.js"
+      "source": "/going",
+      "destination": "/api/going.js"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://github.com/enzsmn/facebook-calendar",
+      "permanent": false
     }
   ]
 }
